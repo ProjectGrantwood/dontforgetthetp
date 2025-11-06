@@ -3,7 +3,7 @@ import { quicksand, figtree } from "@/branding/fonts"
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SharedShopping",
+  title: "Don't Forget the TP!",
   description: "Shopping for the whole house",
 };
 

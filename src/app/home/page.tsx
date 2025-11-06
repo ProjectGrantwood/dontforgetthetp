@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { quicksand } from "@/branding/fonts";
 import { Suspense } from "react";
-import PinnedListsSkeleton from "@/skeletons/pinned-lists-skeleton";
+import PinnedListsSkeleton from "@/components/home-components/pinned-lists-skeleton";
 import PinnedLists from "@/components/home-components/pinned-lists";
 
 export default function Page() {
