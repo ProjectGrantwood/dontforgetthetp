@@ -2,13 +2,15 @@ export type User = {
     user_id: string,
     display_name: string,
     email: string,
-    hashed_password: string
+    hashed_password: string,
+    created_at: string,
+    updated_at: string
 }
 
 export type ShoppingList = {
     list_id: string,
     list_name: string,
-    list_notes: string,
+    list_notes: string | null,
     is_public: boolean,
     created_at: string,
     updated_at: string
@@ -16,31 +18,32 @@ export type ShoppingList = {
 
 export type ItemTemplate = {
     item_template_id: string,
-    user_id: string | undefined,
+    user_id: string | null,
     item_name: string,
-    default_unit: string,
-    is_global: boolean
+    default_units: string,
+    is_global: boolean,
+    created_at: string,
+    updated_at: string
 }
 
-export enum UserRole {
-    onwer = 'owner',
-    editor = 'editor',
-    viewer = 'viewer'
-}
+export type UserRole = 'owner' | 'editor' | 'viewer';
 
-export type ShoppingListsJoinUsers = {
+export type ShoppingListJoinUser = {
     user_id: string,
     list_id: string,
     user_role: UserRole,
     is_pinned: boolean
+    created_at: string,
+    updated_at: string
 }
 
-export type ShoppingListsJoinItems = {
+export type ShoppingListJoinItem = {
     list_item_id: string,
     list_id: string,
-    template_id: string,
+    item_template_id: string | null,
     item_name: string,
-    units_name: string,
+    item_notes: string | null,
+    default_units: string,
     amount: number,
     checked_off: boolean,
     created_at: string,

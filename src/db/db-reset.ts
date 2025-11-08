@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require', prepare: false });
 
 export async function dropAllTables() {
 
@@ -13,6 +13,5 @@ export async function dropAllTables() {
     await sql`DROP TABLE IF EXISTS shopping_lists;`
     await sql`DROP TABLE IF EXISTS item_templates;`
     await sql`DROP TABLE IF EXISTS users;`
-    await sql`DROP TYPE IF EXISTS shopping_list_user_role_type;`
     
 }

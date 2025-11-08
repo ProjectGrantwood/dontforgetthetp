@@ -42,11 +42,12 @@ export async function signupAction(prevState: string | undefined, formData: Form
     const passwordHash = await bcrypt.hash(password, 12);
     
     try {
-        const createdAt = Date.now();
+        const createdAt = new Date().toISOString();
+        const updatedAt = new Date().toISOString();
             await sql`
-                INSERT INTO users (email, hashed_password, created_at)
-                VALUES (${email}, ${passwordHash}, ${createdAt})
-                RETURNING user_id, email, created_at
+                INSERT INTO users (email, hashed_password, created_at, updated_at)
+                VALUES (${email}, ${passwordHash}, ${createdAt}, ${updatedAt})
+                RETURNING user_id, email, created_at, updated_at
             `;
     } catch (error) {
         console.log(error);

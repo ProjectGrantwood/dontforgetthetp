@@ -1,4 +1,16 @@
 import type { NextAuthConfig } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import z from 'zod';
+import type { User } from '@/entities/entities';
+import bcrypt from 'bcryptjs';
+import postgres from 'postgres';
+
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+
+async function getUser(email: string): Promise<User | null> {
+  const rows = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+  return rows[0] ?? null;
+}
 
 export const authConfig = {
     
@@ -33,20 +45,33 @@ export const authConfig = {
       }
     ),
     
-    callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/home');
-            if (isOnDashboard) {
-                return isLoggedIn;
-            }
-            if (isLoggedIn) {
-                return Response.redirect(new URL('/home', nextUrl));
-            }
-            return true;
-        },
-    },
-    
-  providers: [],
+  providers: [
+    Credentials({
+      async authorize(credentials) {
+        const parsed = z
+          .object({
+            email: z.email(),
+            password: z.string().min(6)
+          })
+          .safeParse(credentials);
+          
+          if (!parsed.success) {
+            return null;
+          }
+          
+          parsed.data.email = parsed.data.email.trim();
+          const { email, password } = parsed.data;
+          const user = await getUser(email);
+          if (!user) {
+            return null;
+          }
+          const ok = await bcrypt.compare(password, user.hashed_password);
+          if (!ok) {
+            return null;
+          }
+          return {...user};
+      }
+    })
+  ],
   
 } satisfies NextAuthConfig;

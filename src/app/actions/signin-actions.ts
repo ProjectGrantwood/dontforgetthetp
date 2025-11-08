@@ -14,12 +14,14 @@ export default async function signInAction(
     if (typeof email !== 'string' || typeof password !== 'string') {
         return "Missing email or password";
     }
-    
+    const emailNorm = email.trim();
     try {
-        await signIn('credentials', {email, password, redirectTo: '/home'});
+        
+        await signIn('credentials', {email: emailNorm, password: password, redirectTo: '/home'});
     } catch (error) {
         if (error instanceof AuthError) {
             if (error.type === 'CredentialsSignin') {
+                console.log(error);
                 return 'Invalid credentials';
             }
             console.log(error);

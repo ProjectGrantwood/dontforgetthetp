@@ -1,4 +1,5 @@
 import postgres from 'postgres';
+import bcrypt from 'bcryptjs';
 import { GLOBAL_ITEM_TEMPLATES } from '@/db/global-item-templates';
 import { 
     usersSeed, 
@@ -8,7 +9,7 @@ import {
     shoppingListUsersSeed
 } from '@/db/seed-data';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require', prepare: false });
 
 async function seedGlobalItemTemplates() {
     const insertedItemTemplates = await Promise.all(
@@ -31,6 +32,7 @@ async function seedGlobalItemTemplates() {
 }
 
 async function seedExampleUsers() {
+    const hashed_password = await bcrypt.hash('password123', 12); // set all example users to have the "password123" password
     const insertedExampleUsers = await Promise.all(
         usersSeed.map(
             (user) => sql`
@@ -38,10 +40,11 @@ async function seedExampleUsers() {
                 VALUES (
                     ${user.user_id}, 
                     ${user.email}, 
-                    ${user.hashed_password}, 
+                    ${hashed_password}, 
                     ${new Date().toISOString()}, 
                     ${new Date().toISOString()}
-                );
+                )
+                ON CONFLICT (user_id) DO NOTHING;
             `
         )
     );
@@ -60,7 +63,8 @@ async function seedExampleShoppingLists() {
                     ${list.is_public},
                     ${new Date().toISOString()},
                     ${new Date().toISOString()}
-                );
+                )
+                ON CONFLICT (list_id) DO NOTHING;
             `
         )
     );
@@ -93,9 +97,8 @@ async function seedExampleShoppingListItems() {
         shoppingListItemsSeed.map(
             (item) =>
                 sql`
-                INSERT INTO shopping_lists_join_items (list_item_id, list_id, item_template_id, item_name, item_notes, default_units, amount, checked_off, created_at, updated_at)
+                INSERT INTO shopping_lists_join_items (list_id, item_template_id, item_name, item_notes, default_units, amount, checked_off, created_at, updated_at)
                 VALUES (
-                    ${item.list_item_id},
                     ${item.list_id},
                     ${item.item_template_id},
                     ${item.item_name},
@@ -105,7 +108,7 @@ async function seedExampleShoppingListItems() {
                     ${item.checked_off},
                     ${new Date().toISOString()},
                     ${new Date().toISOString()}
-                )
+                );
             `
         )
     );
@@ -134,14 +137,12 @@ async function seedExampleShoppingListUsers() {
 
 export async function GET() {
     try {
-        await sql.begin( () => [ 
-            seedGlobalItemTemplates(), 
-            seedExampleUsers(),
-            seedExampleShoppingLists(),
-            seedExampleUserItemTemplates(),
-            seedExampleShoppingListItems(),
-            seedExampleShoppingListUsers()
-        ]);
+        await seedGlobalItemTemplates();
+        await seedExampleUsers();
+        await seedExampleShoppingLists();
+        await seedExampleUserItemTemplates();
+        await seedExampleShoppingListItems();
+        await seedExampleShoppingListUsers();
         return Response.json( { messsage: 'Data seeded successfully' } )
     } catch (error) {
         return Response.json( { error: String(error) }, { status: 500 })

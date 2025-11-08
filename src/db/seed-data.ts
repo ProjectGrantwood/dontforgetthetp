@@ -6,32 +6,27 @@ export const usersSeed = [
     
   {
     user_id: '8c9c0f4a-7c0b-4f60-b86d-26c23cfe9b1a',
-    email: 'alice@example.com',
-    hashed_password: '$2a$12$5QxQxZuzD1fXQx6PZyEwneSziEoGXeEov16x3Re9QfWjQxkDFT4Km', // bcrypt hash for "password123"
+    email: 'alice@example.com'
   },
   
   {
     user_id: 'b8b38a32-4513-4c1c-915b-126efba9dbe2',
-    email: 'bob@example.com',
-    hashed_password: '$2a$12$5QxQxZuzD1fXQx6PZyEwneSziEoGXeEov16x3Re9QfWjQxkDFT4Km',
+    email: 'bob@example.com'
   },
   
   {
     user_id: 'c5c087f0-31d1-4b4f-b6e1-5c0dc7c71f61',
-    email: 'carol@example.com',
-    hashed_password: '$2a$12$5QxQxZuzD1fXQx6PZyEwneSziEoGXeEov16x3Re9QfWjQxkDFT4Km',
+    email: 'carol@example.com'
   },
   
   {
     user_id: 'a1f1b42b-9c2b-4d74-bc9c-94cbf6ee1f9b',
-    email: 'dave@example.com',
-    hashed_password: '$2a$12$5QxQxZuzD1fXQx6PZyEwneSziEoGXeEov16x3Re9QfWjQxkDFT4Km',
+    email: 'dave@example.com'
   },
   
   {
     user_id: 'f3f8cc2b-2d54-474e-8cb0-b0b0e43c4f81',
-    email: 'eve@example.com',
-    hashed_password: '$2a$12$5QxQxZuzD1fXQx6PZyEwneSziEoGXeEov16x3Re9QfWjQxkDFT4Km',
+    email: 'eve@example.com'
   },
   
 ];
@@ -277,7 +272,6 @@ export const userItemTemplatesSeed = [
 export const shoppingListItemsSeed = [
   // Alice – Weekly Groceries
   {
-    list_item_id: 'aaa11111-1111-4111-8111-aaaaaaaaaaa1',
     list_id: 'f91a0a1a-d91b-4e83-bb54-ec91e6a9af11',
     item_template_id: '111a2b3c-4d5e-46f7-8901-23456789a001',
     item_name: 'Whole Wheat Bread Rolls',
@@ -287,7 +281,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Get fresh-baked if available.',
   },
   {
-    list_item_id: 'aaa11111-1111-4111-8111-aaaaaaaaaaa2',
     list_id: 'f91a0a1a-d91b-4e83-bb54-ec91e6a9af11',
     item_template_id: '111a2b3c-4d5e-46f7-8901-23456789a004',
     item_name: 'Milk',
@@ -297,7 +290,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Prefer 2% lactose-free.',
   },
   {
-    list_item_id: 'aaa11111-1111-4111-8111-aaaaaaaaaaa3',
     list_id: 'f91a0a1a-d91b-4e83-bb54-ec91e6a9af11',
     item_template_id: '00000001-0000-4000-8000-000000000021',
     item_name: 'Eggs',
@@ -307,7 +299,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'aaa11111-1111-4111-8111-aaaaaaaaaaa4',
     list_id: 'f91a0a1a-d91b-4e83-bb54-ec91e6a9af11',
     item_template_id: '00000001-0000-4000-8000-000000000047',
     item_name: 'Apples',
@@ -319,7 +310,6 @@ export const shoppingListItemsSeed = [
 
   // Alice – Camping Supplies
   {
-    list_item_id: 'aaa22222-2222-4222-8222-aaaaaaaaaaa1',
     list_id: 'a912e6a4-52b1-45c0-bdb4-79e4a3f4589f',
     item_template_id: '111a2b3c-4d5e-46f7-8901-23456789a002',
     item_name: 'Trail Mix',
@@ -329,7 +319,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'aaa22222-2222-4222-8222-aaaaaaaaaaa2',
     list_id: 'a912e6a4-52b1-45c0-bdb4-79e4a3f4589f',
     item_template_id: '111a2b3c-4d5e-46f7-8901-23456789a003',
     item_name: 'Marshmallows for S’mores',
@@ -339,7 +328,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Mini-size works better for roasting.',
   },
   {
-    list_item_id: 'aaa22222-2222-4222-8222-aaaaaaaaaaa3',
     list_id: 'a912e6a4-52b1-45c0-bdb4-79e4a3f4589f',
     item_template_id: '00000001-0000-4000-8000-000000000001',
     item_name: 'Toilet Paper',
@@ -349,7 +337,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'aaa22222-2222-4222-8222-aaaaaaaaaaa4',
     list_id: 'a912e6a4-52b1-45c0-bdb4-79e4a3f4589f',
     item_template_id: '00000001-0000-4000-8000-000000000002',
     item_name: 'Paper Towels',
@@ -361,7 +348,6 @@ export const shoppingListItemsSeed = [
 
   // Bob – Meal Prep List
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb1',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '222b3c4d-5e6f-4708-9012-3456789ab001',
     item_name: 'Brown Rice (bulk)',
@@ -371,7 +357,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb2',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '222b3c4d-5e6f-4708-9012-3456789ab002',
     item_name: 'Chicken Thighs',
@@ -381,7 +366,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Boneless, skinless preferred.',
   },
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb3',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '222b3c4d-5e6f-4708-9012-3456789ab003',
     item_name: 'Frozen Mixed Vegetables',
@@ -391,7 +375,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb4',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '222b3c4d-5e6f-4708-9012-3456789ab004',
     item_name: 'Greek Yogurt (tub)',
@@ -401,7 +384,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Vanilla flavor only.',
   },
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb5',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '00000001-0000-4000-8000-000000000037',
     item_name: 'Olive Oil',
@@ -411,7 +393,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'bbb33333-3333-4333-8333-bbbbbbbbbbb6',
     list_id: '63f087f9-857a-42d2-8bc4-2a168b9d4c53',
     item_template_id: '00000001-0000-4000-8000-000000000034',
     item_name: 'Salt',
@@ -423,7 +404,6 @@ export const shoppingListItemsSeed = [
 
   // Carol – Party Shopping
   {
-    list_item_id: 'ccc44444-4444-4444-8444-ccccccccccc1',
     list_id: 'c3eeb21e-15a0-43a4-9b6d-7c2f84e5b91f',
     item_template_id: '333c4d5e-6f70-4819-0123-456789abc001',
     item_name: 'Party Cups',
@@ -433,7 +413,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Red or blue only.',
   },
   {
-    list_item_id: 'ccc44444-4444-4444-8444-ccccccccccc2',
     list_id: 'c3eeb21e-15a0-43a4-9b6d-7c2f84e5b91f',
     item_template_id: '333c4d5e-6f70-4819-0123-456789abc002',
     item_name: 'Party Ice Bags',
@@ -443,7 +422,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'ccc44444-4444-4444-8444-ccccccccccc3',
     list_id: 'c3eeb21e-15a0-43a4-9b6d-7c2f84e5b91f',
     item_template_id: '00000001-0000-4000-8000-000000000076',
     item_name: 'Chips',
@@ -453,7 +431,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Mix of salty and sweet flavors.',
   },
   {
-    list_item_id: 'ccc44444-4444-4444-8444-ccccccccccc4',
     list_id: 'c3eeb21e-15a0-43a4-9b6d-7c2f84e5b91f',
     item_template_id: '00000001-0000-4000-8000-000000000092',
     item_name: 'Paper Plates',
@@ -465,7 +442,6 @@ export const shoppingListItemsSeed = [
 
   // Carol – Office Supplies
   {
-    list_item_id: 'ccc55555-5555-4455-8555-ccccccccccc1',
     list_id: '1a7a7c62-02e2-41a2-9f5e-620eb6df7b02',
     item_template_id: '333c4d5e-6f70-4819-0123-456789abc004',
     item_name: 'Printer Paper (ream)',
@@ -475,7 +451,6 @@ export const shoppingListItemsSeed = [
     item_notes: '20 lb weight minimum.',
   },
   {
-    list_item_id: 'ccc55555-5555-4455-8555-ccccccccccc2',
     list_id: '1a7a7c62-02e2-41a2-9f5e-620eb6df7b02',
     item_template_id: '333c4d5e-6f70-4819-0123-456789abc005',
     item_name: 'Sticky Notes',
@@ -485,7 +460,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'ccc55555-5555-4455-8555-ccccccccccc3',
     list_id: '1a7a7c62-02e2-41a2-9f5e-620eb6df7b02',
     item_template_id: '00000001-0000-4000-8000-000000000020',
     item_name: 'Facial Tissue',
@@ -495,7 +469,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Keep one box per desk.',
   },
   {
-    list_item_id: 'ccc55555-5555-4455-8555-ccccccccccc4',
     list_id: '1a7a7c62-02e2-41a2-9f5e-620eb6df7b02',
     item_template_id: '00000001-0000-4000-8000-000000000088',
     item_name: 'Coffee',
@@ -507,7 +480,6 @@ export const shoppingListItemsSeed = [
 
   // Dave – Home Improvement List
   {
-    list_item_id: 'ddd66666-6666-4666-8666-ddddddddddd1',
     list_id: '6a7f021d-d08c-4b71-a7a0-2b7d32ef8ac3',
     item_template_id: '444d5e6f-7081-492a-1234-56789abcd001',
     item_name: "Painter's Tape",
@@ -517,7 +489,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Blue tape, 2-inch width.',
   },
   {
-    list_item_id: 'ddd66666-6666-4666-8666-ddddddddddd2',
     list_id: '6a7f021d-d08c-4b71-a7a0-2b7d32ef8ac3',
     item_template_id: '444d5e6f-7081-492a-1234-56789abcd002',
     item_name: 'LED Light Bulbs',
@@ -527,7 +498,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'ddd66666-6666-4666-8666-ddddddddddd3',
     list_id: '6a7f021d-d08c-4b71-a7a0-2b7d32ef8ac3',
     item_template_id: '00000001-0000-4000-8000-000000000003',
     item_name: 'Trash Bags',
@@ -537,7 +507,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Contractor-grade preferred.',
   },
   {
-    list_item_id: 'ddd66666-6666-4666-8666-ddddddddddd4',
     list_id: '6a7f021d-d08c-4b71-a7a0-2b7d32ef8ac3',
     item_template_id: '00000001-0000-4000-8000-000000000099',
     item_name: 'Cleaning Spray',
@@ -549,7 +518,6 @@ export const shoppingListItemsSeed = [
 
   // Eve – Holiday Gifts
   {
-    list_item_id: 'eee77777-7777-4777-8777-eeeeeeeeeee1',
     list_id: 'b92b621a-6133-4c93-a5c4-50ebf2b936a7',
     item_template_id: '555e6f70-8192-4a3b-2345-6789abcde001',
     item_name: 'Gift Wrap Rolls',
@@ -559,7 +527,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Metallic patterns only.',
   },
   {
-    list_item_id: 'eee77777-7777-4777-8777-eeeeeeeeeee2',
     list_id: 'b92b621a-6133-4c93-a5c4-50ebf2b936a7',
     item_template_id: '555e6f70-8192-4a3b-2345-6789abcde002',
     item_name: 'Ribbon Spools',
@@ -569,7 +536,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'eee77777-7777-4777-8777-eeeeeeeeeee3',
     list_id: 'b92b621a-6133-4c93-a5c4-50ebf2b936a7',
     item_template_id: '00000001-0000-4000-8000-000000000097',
     item_name: 'Zipper Bags',
@@ -579,7 +545,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'For small craft items.',
   },
   {
-    list_item_id: 'eee77777-7777-4777-8777-eeeeeeeeeee4',
     list_id: 'b92b621a-6133-4c93-a5c4-50ebf2b936a7',
     item_template_id: '00000001-0000-4000-8000-000000000096',
     item_name: 'Plastic Wrap',
@@ -591,7 +556,6 @@ export const shoppingListItemsSeed = [
 
   // Eve – Groceries – Organic Only
   {
-    list_item_id: 'eee88888-8888-4888-8888-eeeeeeeeeee1',
     list_id: '85ccbd1b-3b9d-4ac7-b1c3-5031d8c65ef9',
     item_template_id: '555e6f70-8192-4a3b-2345-6789abcde003',
     item_name: 'Organic Coffee Beans',
@@ -601,7 +565,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Fair trade certified only.',
   },
   {
-    list_item_id: 'eee88888-8888-4888-8888-eeeeeeeeeee2',
     list_id: '85ccbd1b-3b9d-4ac7-b1c3-5031d8c65ef9',
     item_template_id: '555e6f70-8192-4a3b-2345-6789abcde004',
     item_name: 'Organic Peanut Butter',
@@ -611,7 +574,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'eee88888-8888-4888-8888-eeeeeeeeeee3',
     list_id: '85ccbd1b-3b9d-4ac7-b1c3-5031d8c65ef9',
     item_template_id: '555e6f70-8192-4a3b-2345-6789abcde005',
     item_name: 'Organic Salad Mix',
@@ -621,7 +583,6 @@ export const shoppingListItemsSeed = [
     item_notes: 'Avoid spring mix, go with spinach.',
   },
   {
-    list_item_id: 'eee88888-8888-4888-8888-eeeeeeeeeee4',
     list_id: '85ccbd1b-3b9d-4ac7-b1c3-5031d8c65ef9',
     item_template_id: '00000001-0000-4000-8000-000000000069',
     item_name: 'Plant-Based Milk',
@@ -631,7 +592,6 @@ export const shoppingListItemsSeed = [
     item_notes: null,
   },
   {
-    list_item_id: 'eee88888-8888-4888-8888-eeeeeeeeeee5',
     list_id: '85ccbd1b-3b9d-4ac7-b1c3-5031d8c65ef9',
     item_template_id: '00000001-0000-4000-8000-000000000085',
     item_name: 'Frozen Fruit',

@@ -1,17 +1,14 @@
-import NextAuth from 'next-auth';
+import { auth } from './auth';
 import { NextResponse } from 'next/server';
-import { authConfig } from './auth.config';
- 
-const { auth } = NextAuth(authConfig)
 
 export default auth((req) => {
   const isAuthed = !!req.auth;
-  const { pathname, search } = req.nextUrl;
-  const isPublic = pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/signin');
+  const { pathname } = req.nextUrl;
+  const isPublic = pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/signup');
     
   if (!isAuthed && !isPublic) {
     const url = new URL('/login', req.url);
-    url.searchParams.set('callbackUrl', pathname + search);
+    url.searchParams.set('callbackUrl', pathname);
     return NextResponse.redirect(url);
   }
   
@@ -22,7 +19,5 @@ export default auth((req) => {
 })
  
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-  // The nextjs dashboard tutorial recommended the 'nodejs' runtime, but this was creating build errors.
-  runtime: 'experimental-edge',
+  matcher: [String.raw`/((?!api|_next/static|_next/image|.*\.png$).*)`]
 };

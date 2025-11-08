@@ -12,7 +12,3 @@ export async function getListsByUserId(userId: string){
         ORDER BY sl.updated_at DESC;
     `
 }
-
-export async function findListsByQuery(query: string) {
-    
-}
