@@ -1,5 +1,4 @@
 import postgres from 'postgres';
-import bcrypt from 'bcryptjs';
 import { GLOBAL_ITEM_TEMPLATES } from '@/db/global-item-templates';
 import { 
     usersSeed, 
@@ -32,15 +31,14 @@ async function seedGlobalItemTemplates() {
 }
 
 async function seedExampleUsers() {
-    const hashed_password = await bcrypt.hash('password123', 12); // set all example users to have the "password123" password
     const insertedExampleUsers = await Promise.all(
         usersSeed.map(
             (user) => sql`
-                INSERT INTO users (user_id, email, hashed_password, created_at, updated_at)
+                INSERT INTO neon_auth.users_sync (id, email, name, created_at, updated_at)
                 VALUES (
                     ${user.user_id}, 
                     ${user.email}, 
-                    ${hashed_password}, 
+                    ${user.name},
                     ${new Date().toISOString()}, 
                     ${new Date().toISOString()}
                 )

@@ -6,27 +6,32 @@ export const usersSeed = [
     
   {
     user_id: '8c9c0f4a-7c0b-4f60-b86d-26c23cfe9b1a',
-    email: 'alice@example.com'
+    email: 'alice@example.com',
+    name: 'Alice'
   },
   
   {
     user_id: 'b8b38a32-4513-4c1c-915b-126efba9dbe2',
-    email: 'bob@example.com'
+    email: 'bob@example.com',
+    name: 'Bob'
   },
   
   {
     user_id: 'c5c087f0-31d1-4b4f-b6e1-5c0dc7c71f61',
-    email: 'carol@example.com'
+    email: 'carol@example.com',
+    name: 'Carol',
   },
   
   {
     user_id: 'a1f1b42b-9c2b-4d74-bc9c-94cbf6ee1f9b',
-    email: 'dave@example.com'
+    email: 'dave@example.com',
+    name: 'Dave'
   },
   
   {
     user_id: 'f3f8cc2b-2d54-474e-8cb0-b0b0e43c4f81',
-    email: 'eve@example.com'
+    email: 'eve@example.com',
+    name: 'Eve',
   },
   
 ];

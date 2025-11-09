@@ -9,6 +9,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const SignupSchema = z.object({
     email: z.email(),
+    name: z.string(),
     password: z.string().min(6).max(200)
 });
 
@@ -16,6 +17,7 @@ export async function signupAction(prevState: string | undefined, formData: Form
     
     const rawSignupData = {
         email: formData.get('email'),
+        name: formData.get('name');
         password: formData.get('password')
     }
     
@@ -30,7 +32,7 @@ export async function signupAction(prevState: string | undefined, formData: Form
         return `Signup not successful`
     }
     
-    const {email, password } = parsedSignupData.data;
+    const {email, name, password } = parsedSignupData.data;
     
     const userEmailExists = await sql`SELECT 1 FROM users WHERE email = ${email} LIMIT 1`;
 
@@ -45,9 +47,9 @@ export async function signupAction(prevState: string | undefined, formData: Form
         const createdAt = new Date().toISOString();
         const updatedAt = new Date().toISOString();
             await sql`
-                INSERT INTO users (email, hashed_password, created_at, updated_at)
+                INSERT INTO neon_auth.users_sync (email, hashed_password, created_at, updated_at)
                 VALUES (${email}, ${passwordHash}, ${createdAt}, ${updatedAt})
-                RETURNING user_id, email, created_at, updated_at
+                RETURNING email, created_at, updated_at
             `;
     } catch (error) {
         console.log(error);

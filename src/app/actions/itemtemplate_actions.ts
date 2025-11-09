@@ -1,2 +1,2 @@
 import postgres from 'postgres';
-import { ShoppingList } from '@/entities/entities'
+import { ShoppingList } from '@/types/entities'

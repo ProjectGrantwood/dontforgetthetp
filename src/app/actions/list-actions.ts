@@ -1,5 +1,5 @@
 import postgres from 'postgres';
-import { ShoppingList } from '@/entities/entities'
+import { ShoppingList } from '@/types/entities'
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
