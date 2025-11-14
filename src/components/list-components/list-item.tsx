@@ -8,7 +8,7 @@ export default function ListItem({ item }: { item: ItemTemplate }) {
     <div className="flex flex-row w-full max-w-[300px] justify-between text-sm">
       <Input type="text" placeholder={item.item_name} />
       :
-      <Input type="number" value={1} name="amount" />
+      <Input type="number" defaultValue={1} name="amount" />
       <Input type="text" placeholder={item.default_units} />
     </div>
   );

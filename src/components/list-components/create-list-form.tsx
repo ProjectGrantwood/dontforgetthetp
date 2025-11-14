@@ -6,9 +6,9 @@ import {
   ComboboxOption,
 } from "@/components/global-components/combobox";
 import { HRule } from "@/components/global-components/hrule";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcnui-components/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import ListItem from "./list-item";
+import ListItem from "@/components/list-components/list-item";
 import type { ItemTemplate } from "@/types/entities";
 
 export default function CreateListForm({
@@ -53,8 +53,8 @@ export default function CreateListForm({
       <div className="mb-3">Items</div>
 
       <div className="flex flex-col items-center mx-auto w-full gap-2">
-        {items.map((item) => (
-          <ListItem key={`${item.item_template_id}`} item={item} />
+        {items.map((item, index) => (
+          <ListItem key={`${item.item_template_id}${index}`} item={item} />
         ))}
       </div>
 
@@ -63,7 +63,7 @@ export default function CreateListForm({
           options={allItems}
           placeholder="Add an item..."
           emptyText="No items found"
-          onChange={setSelectedTemplateId}
+          action={setSelectedTemplateId}
         />
         <Button
           type="button"

@@ -27,12 +27,12 @@ export function Combobox({
   options,
   placeholder,
   emptyText,
-  onChange,
+  action,
 }: {
   options: ComboboxOption[];
   placeholder: string;
   emptyText: string;
-  onChange: (value: string) => void;
+  action: (value: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -63,7 +63,7 @@ export function Combobox({
                   value={option.label}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
-                    onChange(value);
+                    action(value);
                     setOpen(false);
                   }}
                 >
