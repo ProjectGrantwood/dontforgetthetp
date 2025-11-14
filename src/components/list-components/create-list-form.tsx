@@ -34,6 +34,10 @@ export default function CreateListForm({
     setItems((prev) => [...prev, template]);
   };
 
+  const handleRemoveItem = (index: number) => {
+    setItems((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleSelectTemplate = (itemTemplateId: string) => {
     if (itemTemplateId === selectedTemplateId) {
       setSelectedTemplateId("");
@@ -59,19 +63,24 @@ export default function CreateListForm({
 
       <div className="mb-3">Items</div>
 
-      <div className="flex flex-col items-center mx-auto w-full gap-2">
+      <div className="flex flex-col items-center mx-auto mb-3 w-full gap-2">
         {items.map((item, index) => (
-          <ListItem key={`${item.item_template_id}${index}`} item={item} />
+          <ListItem
+            key={`${item.item_template_id}${index}`}
+            item={item}
+            onRemoveAction={handleRemoveItem}
+            index={index}
+          />
         ))}
       </div>
-
-      <div className="mt-4 flex flex-row justify-between gap-3 w-full">
+      <HRule />
+      <div className="mt-4 flex flex-row justify-between gap-3 w-full max-w-[300px]">
         <Combobox
           options={allItems}
           placeholder="Add an item..."
           emptyText="No items found"
           onSelectAction={handleSelectTemplate}
-          value={selectedTemplateId}
+          selectedValue={selectedTemplateId}
         />
         <Button
           type="button"
@@ -79,6 +88,7 @@ export default function CreateListForm({
           onClick={handleAddItem}
         >
           <PlusIcon />
+          Add Item
         </Button>
       </div>
     </form>
