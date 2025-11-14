@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcnui-components/button";
 import {
   Command,
   CommandEmpty,
@@ -11,12 +11,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from "@/components/shadcnui-components/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/components/shadcnui-components/popover";
 
 export type ComboboxOption = {
   value: string;
@@ -27,15 +27,17 @@ export function Combobox({
   options,
   placeholder,
   emptyText,
-  action,
+  onSelectAction,
+  selectedValue,
 }: {
   options: ComboboxOption[];
   placeholder: string;
   emptyText: string;
-  action: (value: string) => void;
+  onSelectAction: (value: string) => void;
+  selectedValue: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(selectedValue);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -61,10 +63,9 @@ export function Combobox({
                 <CommandItem
                   key={option.value}
                   value={option.label}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    action(value);
-                    setOpen(false);
+                  onSelect={function () {
+                    onSelectAction(option.value);
+                    setValue(option.label);
                   }}
                 >
                   {option.label}

@@ -20,7 +20,6 @@ export default async function Page() {
   const userItems = await cachedGetAllUserItems(user.id);
 
   const templates: ItemTemplate[] = globalItems.concat(userItems);
-  console.log(templates);
   const allItems: ComboboxOption[] = templates.map((item) => ({
     label: item.item_name,
     value: item.item_template_id,

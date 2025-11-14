@@ -31,8 +31,15 @@ export default function CreateListForm({
         item_name: "",
         default_units: "",
       } as ItemTemplate); // empty name + default unit
-
     setItems((prev) => [...prev, template]);
+  };
+
+  const handleSelectTemplate = (itemTemplateId: string) => {
+    if (itemTemplateId === selectedTemplateId) {
+      setSelectedTemplateId("");
+    } else {
+      setSelectedTemplateId(itemTemplateId);
+    }
   };
 
   return (
@@ -63,7 +70,8 @@ export default function CreateListForm({
           options={allItems}
           placeholder="Add an item..."
           emptyText="No items found"
-          action={setSelectedTemplateId}
+          onSelectAction={handleSelectTemplate}
+          value={selectedTemplateId}
         />
         <Button
           type="button"
