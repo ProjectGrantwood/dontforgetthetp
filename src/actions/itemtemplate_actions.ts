@@ -3,21 +3,11 @@ import { ItemTemplate } from "@/types/entities";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-export async function getAllGlobalItems() {
-  const globalItemTemplates = await sql<ItemTemplate[]>`
-    SELECT * FROM item_templates
-    WHERE is_global = TRUE;
+export async function getAllItems() {
+  const itemTemplates = await sql<ItemTemplate[]>`
+    SELECT * FROM item_templates;
   `;
-
-  return globalItemTemplates;
-}
-
-export async function getAllUserItemTemplates(userId: string) {
-  const userItemTemplates = await sql<ItemTemplate[]>`
-      SELECT * FROM item_templates
-      WHERE user_id = ${userId}
-    `;
-  return userItemTemplates;
+  return itemTemplates;
 }
 
 export async function getItemTemplateById(id: string) {

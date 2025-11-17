@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/shadcnui-components/button";
@@ -19,8 +19,8 @@ import {
 } from "@/components/shadcnui-components/popover";
 
 export type ComboboxOption = {
-  value: string;
-  label: string;
+  value: string; // id
+  label: string; // display text
 };
 
 export function Combobox({
@@ -38,6 +38,13 @@ export function Combobox({
 }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(selectedValue);
+
+  useEffect(() => {
+    setValue(selectedValue);
+  }, [selectedValue]);
+
+  const selectedOption = options.find((option) => option.value === value);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -45,33 +52,34 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between text-lg rounded-s-none"
         >
-          {value
-            ? options.find((option) => option.label === value)?.label
-            : placeholder}
+          {selectedOption ? selectedOption.label : placeholder}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-full p-0">
+      <PopoverContent className="min-w-full p-0 text-lg">
         <Command>
-          <CommandInput placeholder={placeholder} className="h-9" />
+          <CommandInput placeholder={placeholder} className="h-9 text-lg" />
           <CommandList>
-            <CommandEmpty>{emptyText}</CommandEmpty>
+            <CommandEmpty className="text-lg">{emptyText}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => (
                 <CommandItem
+                  className="text-lg"
                   key={option.value}
                   value={option.label}
-                  onSelect={function () {
-                    onSelectAction(option.value);
-                    setValue(option.label);
+                  onSelect={() => {
+                    const newValue = option.value === value ? "" : option.value;
+                    setValue(newValue);
+                    onSelectAction(newValue);
+                    setOpen(false);
                   }}
                 >
                   {option.label}
                   <Check
                     className={cn(
-                      "ml-auto",
+                      "ml-auto text-lg",
                       value === option.value ? "opacity-100" : "opacity-0",
                     )}
                   />

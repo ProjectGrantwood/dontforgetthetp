@@ -4,32 +4,30 @@ import { ItemTemplate } from "@/types/entities";
 import { ComboboxOption } from "@/components/global-components/combobox";
 import CreateListForm from "@/components/list-components/create-list-form";
 import { cache } from "react";
-import {
-  getAllGlobalItems,
-  getAllUserItemTemplates,
-} from "@/actions/itemtemplate_actions";
+import { getAllItems } from "@/actions/itemtemplate_actions";
 
-const cachedGetAllGlobalItems = cache(getAllGlobalItems);
-const cachedGetAllUserItems = cache(getAllUserItemTemplates);
+const cachedGetAllItems = cache(getAllItems);
 
 export default async function Page() {
-  const user = await stackServerApp.getUser({ or: "redirect" });
+  await stackServerApp.getUser({ or: "redirect" });
   const formattedDate = formatDate(new Date());
 
-  const globalItems = await cachedGetAllGlobalItems();
-  const userItems = await cachedGetAllUserItems(user.id);
+  const globalItems = await cachedGetAllItems();
 
-  const templates: ItemTemplate[] = globalItems.concat(userItems);
-  const allItems: ComboboxOption[] = templates.map((item) => ({
+  const allItems: ComboboxOption[] = globalItems.map((item) => ({
     label: item.item_name,
     value: item.item_template_id,
   }));
+  allItems.unshift({
+    label: "New Item",
+    value: "",
+  });
 
   return (
     <CreateListForm
       formattedDate={formattedDate}
       allItems={allItems}
-      templates={templates}
+      templates={globalItems}
     />
   );
 }

@@ -13,3 +13,10 @@ export async function getListsByUserId(userId: string) {
     `;
   return lists;
 }
+
+export async function createList(userId: string, listName: string) {
+  const listId =
+    await sql`INSERT INTO shopping_lists (list_name, is_public, created_at, updated_at) VALUES (${listName}, false, NOW(), NOW()) RETURNING list_id`;
+  await sql`INSERT INTO shopping_lists_join_users (list_id, user_id, user_role, is_pinned) VALUES (${listId}, ${userId}, 'OWNER', true)`;
+  return listId;
+}
