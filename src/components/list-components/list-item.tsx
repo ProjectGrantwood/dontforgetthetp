@@ -1,11 +1,12 @@
 "use client";
 
-import { ListItemData } from "@/types/formDataObjects";
+import { useState } from "react";
+
 import { Input } from "@/components/shadcnui-components/input";
 import { Button } from "@/components/shadcnui-components/button";
 import { Textarea } from "@/components/shadcnui-components/textarea";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { ListItemData } from "@/types/dto";
 
 const LABEL_STYLE = "text-lg text-gray-500 min-h-8";
 const INPUT_STYLE = "text-lg min-h-8 md:text-lg";
@@ -100,6 +101,7 @@ export default function ListItem({
             placeholder="Add notes..."
             defaultValue={item.notes}
             onChange={(e) => onUpdateNotesAction(index, e.target.value)}
+            spellCheck={false}
             className="text-lg md:text-lg resize-none"
           />
           <label

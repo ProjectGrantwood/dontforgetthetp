@@ -1,12 +1,3 @@
-export type User = {
-  user_id: string;
-  display_name: string;
-  email: string;
-  hashed_password: string;
-  created_at: string;
-  updated_at: string;
-};
-
 export type ShoppingList = {
   list_id: string;
   list_name: string;
@@ -38,7 +29,6 @@ export type ShoppingListJoinUser = {
 export type ShoppingListJoinItem = {
   list_item_id: string;
   list_id: string;
-  item_template_id: string | null;
   item_name: string;
   item_notes: string | null;
   default_units: string;

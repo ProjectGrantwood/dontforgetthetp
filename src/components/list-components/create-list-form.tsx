@@ -5,13 +5,14 @@ import {
   Combobox,
   ComboboxOption,
 } from "@/components/global-components/combobox";
-import { Input } from "@/components/shadcnui-components/input";
 import { HRule } from "@/components/global-components/hrule";
+import { Input } from "@/components/shadcnui-components/input";
 import { Button } from "@/components/shadcnui-components/button";
+import { Textarea } from "@/components/shadcnui-components/textarea";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import ListItem from "@/components/list-components/list-item";
 import type { ItemTemplate } from "@/types/entities";
-import { ListItemData } from "@/types/formDataObjects";
+import { ListItemData } from "@/types/dto";
 
 export default function CreateListForm({
   formattedDate,
@@ -24,6 +25,7 @@ export default function CreateListForm({
 }) {
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [items, setItems] = useState<ListItemData[]>([]);
+  const [notes, setNotes] = useState("");
 
   const convertTemplateToListItem = (template: ItemTemplate): ListItemData => {
     return {
@@ -129,6 +131,13 @@ export default function CreateListForm({
 
       <div className="mt-4 flex flex-row justify-between w-full max-w-[400px]"></div>
       <h3 className="mb-3">Other</h3>
+      <Textarea
+        className="resize-none text-lg md:text-lg max-h-5 h-5"
+        spellCheck={false}
+        placeholder="Any extra notes... ?"
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+      />
       <HRule />
 
       <Button

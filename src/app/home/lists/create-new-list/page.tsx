@@ -1,10 +1,9 @@
 import { formatDate } from "@/utils/timeDateUtils";
 import { stackServerApp } from "@/stack/server";
-import { ItemTemplate } from "@/types/entities";
 import { ComboboxOption } from "@/components/global-components/combobox";
 import CreateListForm from "@/components/list-components/create-list-form";
 import { cache } from "react";
-import { getAllItems } from "@/actions/itemtemplate_actions";
+import { getAllItems } from "@/db/data-access/itemtemplate-access";
 
 const cachedGetAllItems = cache(getAllItems);
 

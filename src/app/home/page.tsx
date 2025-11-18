@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import AddButton from "@/components/global-components/add-button";
+import LinkButton from "@/components/global-components/link-button";
 import PinnedListsSkeleton from "@/components/home-components/pinned-lists-skeleton";
 import PinnedLists from "@/components/home-components/pinned-lists";
 import { stackServerApp } from "@/stack/server";
@@ -9,10 +9,9 @@ export default async function Page() {
   return (
     <div className="flex flex-col w-7/8 mx-auto mb-auto mt-3">
       <div className="w-auto m-auto pb-3">
-        <AddButton
-          href="/home/lists/create-new-list"
-          displayText="Create New List"
-        ></AddButton>
+        <LinkButton href="/home/lists/create-new-list">
+          Create New List
+        </LinkButton>
       </div>
       <Suspense fallback={<PinnedListsSkeleton />}>
         <PinnedLists userId={user.id} />
