@@ -1,22 +1,15 @@
-import postgres from "postgres";
+import { sql } from "@/lib/preparedPostgresSql";
 import { GLOBAL_ITEM_TEMPLATES } from "@/db/global-item-templates";
-
-const sql = postgres(process.env.POSTGRES_URL!, {
-  ssl: "require",
-  prepare: false,
-});
 
 async function seedGlobalItemTemplates() {
   const insertedItemTemplates = await Promise.all(
     GLOBAL_ITEM_TEMPLATES.map(
       (item) => sql`
-                INSERT INTO item_templates (item_template_id, item_name, default_units, created_at, updated_at)
+                INSERT INTO item_templates (item_template_id, item_name, default_units)
                 VALUES (
                     ${item.item_template_id},
                     ${item.item_name}, 
-                    ${item.default_units}, 
-                    ${new Date().toISOString()},
-                    ${new Date().toISOString()}
+                    ${item.default_units}
                 )
                 ON CONFLICT (item_template_id) DO NOTHING;
             `,

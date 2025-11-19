@@ -12,8 +12,8 @@ async function setupShoppingListsTable() {
                 list_name  TEXT        NOT NULL,
                 list_notes TEXT,
                 is_public  BOOLEAN     NOT NULL DEFAULT FALSE,
-                created_at TIMESTAMPTZ NOT NULL,
-                updated_at TIMESTAMPTZ NOT NULL
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
             );
         `;
 
@@ -25,8 +25,8 @@ async function setupItemTemplatesTable() {
                 item_template_id      UUID                  DEFAULT uuid_generate_v4() PRIMARY KEY,
                 item_name             TEXT        NOT NULL,
                 default_units         VARCHAR(16) NOT NULL  DEFAULT 'units',
-                created_at            TIMESTAMPTZ NOT NULL,
-                updated_at            TIMESTAMPTZ NOT NULL
+                created_at            TIMESTAMPTZ NOT NULL  DEFAULT NOW(),
+                updated_at            TIMESTAMPTZ NOT NULL  DEFAULT NOW()
             );
         `;
 
@@ -42,8 +42,8 @@ async function setupShoppingListsJoinItemTemplatesTable() {
                 default_units    VARCHAR(16)    NOT NULL DEFAULT 'units',
                 amount           NUMERIC(10, 2) NOT NULL DEFAULT 1 CHECK (amount >= 0),
                 checked_off      BOOLEAN        NOT NULL DEFAULT FALSE,
-                created_at       TIMESTAMPTZ    NOT NULL,
-                updated_at       TIMESTAMPTZ    NOT NULL
+                created_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+                updated_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
             );
         `;
 
@@ -74,8 +74,8 @@ async function setupShoppingListsJoinUsersTable() {
                 list_id    UUID                         NOT NULL REFERENCES shopping_lists(list_id) ON DELETE CASCADE,
                 user_role  shopping_list_user_role_type NOT NULL,
                 is_pinned  BOOLEAN                      NOT NULL DEFAULT FALSE,
-                created_at TIMESTAMPTZ                  NOT NULL,
-                updated_at TIMESTAMPTZ                  NOT NULL,
+                created_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW()
                 PRIMARY KEY (user_id, list_id)
             );
         `;

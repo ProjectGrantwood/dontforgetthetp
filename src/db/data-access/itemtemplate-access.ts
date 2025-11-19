@@ -1,7 +1,5 @@
-import postgres from "postgres";
+import { sql } from "@/lib/postgresSql";
 import { ItemTemplate } from "@/types/entities";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 export async function getAllItems() {
   const itemTemplates = await sql<ItemTemplate[]>`

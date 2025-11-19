@@ -13,6 +13,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import ListItem from "@/components/list-components/list-item";
 import type { ItemTemplate } from "@/types/entities";
 import { ListItemData } from "@/types/dto";
+import { createList } from "@/services/list-service";
 
 export default function CreateListForm({
   formattedDate,

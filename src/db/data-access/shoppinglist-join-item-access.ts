@@ -1,8 +1,6 @@
-import postgres from "postgres";
+import { sql } from "@/lib/postgresSql";
 import { ShoppingListJoinItem } from "@/types/entities";
 import { ShoppingListJoinItemData } from "@/types/dto";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 export async function getAllItemsByShoppingListId(
   id: string,
