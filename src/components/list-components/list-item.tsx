@@ -16,12 +16,18 @@ export default function ListItem({
   item,
   onRemoveAction,
   onUpdateNotesAction,
+  onUpdateItemNameAction,
+  onUpdateItemAmountAction,
+  onUpdateItemUnitsAction,
   index,
   className,
 }: {
   item: ListItemData;
   onRemoveAction: (index: number) => void;
   onUpdateNotesAction: (index: number, notes: string) => void;
+  onUpdateItemNameAction: (index: number, name: string) => void;
+  onUpdateItemAmountAction: (index: number, amount: number) => void;
+  onUpdateItemUnitsAction: (index: number, units: string) => void;
   index: number;
   className?: string;
 }) {
@@ -39,6 +45,7 @@ export default function ListItem({
             type="text"
             name="item-name"
             defaultValue={item.item_name}
+            onChange={(e) => onUpdateItemNameAction(index, e.target.value)}
             className={INPUT_STYLE}
           />
           <label htmlFor="item-name" className={LABEL_STYLE}>
@@ -56,6 +63,7 @@ export default function ListItem({
             min={1}
             max={100}
             name="item-amount"
+            onChange={(e) => onUpdateItemAmountAction(index, e.target.value)}
             className={INPUT_STYLE}
           />
           <label htmlFor="item-amount" className={LABEL_STYLE}>
@@ -67,6 +75,7 @@ export default function ListItem({
             type="text"
             defaultValue={item.default_units}
             name="item-units"
+            onChange={(e) => onUpdateItemUnitsAction(index, e.target.value)}
             className={INPUT_STYLE}
           />
           <label htmlFor="item-units" className={LABEL_STYLE}>

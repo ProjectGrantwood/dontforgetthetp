@@ -1,4 +1,4 @@
-import { sql } from "@/lib/postgresSql";
+import { sql } from "@/lib/connections/postgresSql";
 import { setupAllTables } from "@/db/db-setup";
 
 export async function GET() {

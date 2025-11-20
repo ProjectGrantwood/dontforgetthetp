@@ -1,4 +1,4 @@
-import { sql } from "@/lib/postgresSql";
+import { sql } from "@/lib/connections/postgresSql";
 import { ShoppingListJoinItem } from "@/types/entities";
 import { ShoppingListJoinItemData } from "@/types/dto";
 
@@ -12,24 +12,67 @@ export async function getAllItemsByShoppingListId(
 }
 
 export async function createItem(
-  itemData: ShoppingListJoinItemData,
-): Promise<ShoppingListJoinItem> {
-  const item = await sql<ShoppingListJoinItem[]>`
-        INSERT INTO shopping_list_join_items (list_item_id, item_id, list_id, item_name, item_notes, default_units, amount, checked_off, created_at, updated_at)
-        VALUES (${itemData.list_id}, ${itemData.item_id}, ${itemData.list_id}, ${itemData.item_name}, ${itemData.item_notes}, ${itemData.default_units}, ${itemData.amount}, ${itemData.checked_off}, NOW(), NOW())
+  listId: string,
+  itemName: string,
+  defaultUnits: string,
+  amount: number,
+  itemNotes?: string,
+) {
+  const itemInfo: Record<string, unknown> = {
+    list_id: listId,
+    item_name: itemName,
+    default_units: defaultUnits,
+    amount: amount,
+  };
+  if (itemNotes !== undefined) itemInfo.item_notes = itemNotes;
+
+  const item = await sql`
+        INSERT INTO shopping_lists_join_items (list_id, item_name, item_notes, default_units, amount, checked_off, created_at, updated_at)
+        VALUES (${sql(itemInfo)}, false, NOW(), NOW())
         RETURNING *
     `;
   return item[0];
 }
 
-export async function updateItem(
-  itemData: ShoppingListJoinItemData,
-): Promise<ShoppingListJoinItem> {
-  const item = await sql<ShoppingListJoinItem[]>`
-        UPDATE shopping_list_join_items
-        SET item_id = ${itemData.item_id}, list_id = ${itemData.list_id}, item_name = ${itemData.item_name}, item_notes = ${itemData.item_notes}, default_units = ${itemData.default_units}, amount = ${itemData.amount}, checked_off = ${itemData.checked_off}, updated_at = NOW()
-        WHERE id = ${itemData.item_id}
-        RETURNING *
+export async function createItems(items: ShoppingListJoinItemData[]) {
+  const insertedItems = await sql`
+      INSERT INTO shopping_lists_join_items ${sql(items)}
+      RETURNING *
     `;
-  return item[0];
+  return insertedItems;
+}
+
+export async function updateItem(
+  listId: string,
+  itemId: string,
+  itemName?: string,
+  itemNotes?: string,
+  defaultUnits?: string,
+  amount?: number,
+  checkedOff?: boolean,
+) {
+  const updates: Record<string, unknown> = {};
+  if (itemName !== undefined) updates.item_name = itemName;
+  if (itemNotes !== undefined) updates.item_notes = itemNotes;
+  if (defaultUnits !== undefined) updates.default_units = defaultUnits;
+  if (amount !== undefined) updates.amount = amount;
+  if (checkedOff !== undefined) updates.checkedOff = checkedOff;
+  const item = await sql`
+        UPDATE shopping_lists_join_items
+        SET ${sql(updates)}, updated_at = NOW()
+        WHERE list_id = ${listId} AND item_id = ${itemId}
+    `;
+  return item;
+}
+
+export async function toggleItemCheckedOff(
+  listId: string,
+  itemId: string,
+  checkedOff: boolean,
+) {
+  await sql`
+      UPDATE shopping_lists_join_items
+      SET checked_off = ${checkedOff}
+      WHERE list_id = ${listId} and item_id=${itemId}
+    `;
 }

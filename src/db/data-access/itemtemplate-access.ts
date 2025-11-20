@@ -1,4 +1,4 @@
-import { sql } from "@/lib/postgresSql";
+import { sql } from "@/lib/connections/postgresSql";
 import { ItemTemplate } from "@/types/entities";
 
 export async function getAllItems() {

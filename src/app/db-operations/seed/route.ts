@@ -1,4 +1,4 @@
-import { sql } from "@/lib/preparedPostgresSql";
+import { sql } from "@/lib/connections/preparedPostgresSql";
 import { GLOBAL_ITEM_TEMPLATES } from "@/db/global-item-templates";
 
 async function seedGlobalItemTemplates() {

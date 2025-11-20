@@ -1,4 +1,4 @@
-import { sql } from "@/lib/postgresSql";
+import { sql } from "@/lib/connections/postgresSql";
 
 export async function dropAllTables() {
   await sql`DROP INDEX IF EXISTS ux_global_name;`;

@@ -1,9 +1,4 @@
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL!, {
-  ssl: "require",
-  prepare: false,
-});
+import { sql } from "@/lib/connections/preparedPostgresSql";
 
 async function setupShoppingListsTable() {
   await sql`
@@ -43,7 +38,7 @@ async function setupShoppingListsJoinItemTemplatesTable() {
                 amount           NUMERIC(10, 2) NOT NULL DEFAULT 1 CHECK (amount >= 0),
                 checked_off      BOOLEAN        NOT NULL DEFAULT FALSE,
                 created_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
-                updated_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+                updated_at       TIMESTAMPTZ    NOT NULL DEFAULT NOW()
             );
         `;
 
@@ -75,7 +70,7 @@ async function setupShoppingListsJoinUsersTable() {
                 user_role  shopping_list_user_role_type NOT NULL,
                 is_pinned  BOOLEAN                      NOT NULL DEFAULT FALSE,
                 created_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
-                updated_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW()
+                updated_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
                 PRIMARY KEY (user_id, list_id)
             );
         `;

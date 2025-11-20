@@ -1,4 +1,4 @@
-import { sql } from "@/lib/postgresSql";
+import { sql } from "@/lib/connections/postgresSql";
 import { dropAllTables } from "@/db/db-reset";
 
 export async function GET() {

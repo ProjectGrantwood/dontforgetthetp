@@ -1,7 +1,7 @@
-import { getListsByUserId } from "@/actions/list-actions";
+import { getListsByUserIdService } from "@/services/list-service";
 
 export default async function PinnedLists({ userId }: { userId: string }) {
-  const lists = await getListsByUserId(userId);
+  const lists = await getListsByUserIdService(userId);
 
   return (
     <div className="flex flex-col items-center rounded bg-gray-900 w-7/8 h-48 m-auto">
