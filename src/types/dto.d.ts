@@ -23,6 +23,7 @@ export type ShoppingListData = {
   list_id: string;
   list_name: string;
   list_notes: string | null;
+  item_count: number;
   is_public: boolean;
 };
 
@@ -31,4 +32,15 @@ export type ShoppingListUserData = {
   list_id: string;
   user_role: UserRole;
   is_pinned: boolean;
+};
+
+export type ShoppingListWithUserMeta = {
+  list_id: string;
+  list_name: string;
+  list_notes: string | null;
+  item_count: number;
+  is_public: boolean;
+  is_pinned: boolean;
+  user_role: UserRole;
+  updated_at: Date;
 };

@@ -1,36 +1,49 @@
 import {
   createList,
-  getListByUserIdAndListId,
   getListsByUserId,
+  getListById,
   updateList,
   deleteList,
 } from "@/db/data-access/list-access";
-import { addOrUpdateListUser } from "@/db/data-access/shoppinglist-join-users-access";
 
-import { ShoppingListData } from "@/types/dto";
+import { ShoppingListData, ShoppingListWithUserMeta } from "@/types/dto";
 
 export const createListService = async (listData: ShoppingListData) => {
   const listId = await createList(
     listData.list_id,
     listData.list_name,
     listData.is_public,
+    listData.item_count,
     listData.list_notes,
   );
   return listId;
 };
 
-export const getListByUserIdAndListIdService = async (
-  userId: string,
-  listId: string,
-) => {
-  // needs user role verification or check that the list is public
-  const list = await getListByUserIdAndListId(userId, listId);
+export const getListByIdService = async (listId: string) => {
+  const list = await getListById(listId);
   return list;
 };
 
 export const getListsByUserIdService = async (userId: string) => {
-  const lists = getListsByUserId(userId);
-  return lists;
+  const lists = await getListsByUserId(userId);
+  function sortListsbyPinnedOrDate(
+    listA: ShoppingListWithUserMeta,
+    listB: ShoppingListWithUserMeta,
+  ) {
+    if (listA.is_pinned) {
+      if (listB.is_pinned) {
+        return listA.updated_at < listB.updated_at ? 1 : -1;
+      }
+      return -1;
+    }
+    if (listB.is_pinned) {
+      return 1;
+    }
+    return listA.updated_at < listB.updated_at ? 1 : -1;
+  }
+
+  const listsSorted = lists.sort(sortListsbyPinnedOrDate);
+  return listsSorted;
 };
 
 export const updateListService = async (

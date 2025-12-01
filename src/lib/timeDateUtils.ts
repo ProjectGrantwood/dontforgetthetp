@@ -16,5 +16,5 @@ export function formatDate(d: Date) {
     "Saturday",
   ][dayOfWeek];
 
-  return `${dayOfWeekDisplay} shopping, ${month + 1}/${dayOfMonth}/${year - Math.floor(year / 1000) * 1000}`;
+  return `${dayOfWeekDisplay}, ${month + 1}/${dayOfMonth}/${year - Math.floor(year / 1000) * 1000}`;
 }

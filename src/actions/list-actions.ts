@@ -8,7 +8,6 @@ import { addOrUpdateUserListRoleService } from "@/services/list-user-service";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { stackServerApp } from "@/stack/server";
-import { UserRole } from "@/types/entities";
 
 const ListItemSchema = z.object({
   list_id: z.string(),
@@ -16,7 +15,7 @@ const ListItemSchema = z.object({
   item_name: z.string().min(1),
   default_units: z.string().min(1),
   item_notes: z.string().optional(),
-  amount: z.preprocess((v) => Number(v), z.number().positive()),
+  amount: z.preprocess((v) => Number(v), z.number().positive().min(1)),
 });
 
 const ListItemSchemaWithOmissions = ListItemSchema.omit({ list_id: true });
@@ -27,7 +26,7 @@ const CreateListFormSchema = z.object({
   list_notes: z.string().optional(),
   is_public: z.boolean(),
   is_pinned: z.boolean(),
-  items: z.array(ListItemSchemaWithOmissions),
+  items: z.array(ListItemSchemaWithOmissions).min(1),
 });
 
 const CreateListWithOmissions = CreateListFormSchema.omit({ list_id: true });
@@ -55,6 +54,7 @@ export async function createListAction(formData: FormData) {
     list_id: crypto.randomUUID(),
     list_name: validatedFields.data.list_name,
     list_notes: validatedFields.data.list_notes,
+    item_count: validatedFields.data.items.length,
     is_public: validatedFields.data.is_public,
   } as ShoppingListData;
 

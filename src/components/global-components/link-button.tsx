@@ -1,23 +1,21 @@
 import Link from "next/link";
-import { quicksand } from "@/branding/fonts";
+import clsx from "clsx";
 
-export default function LinkButton({
-  href,
-  children,
-}: {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
   href: string;
-  children?: React.ReactNode;
-}) {
+}
+
+export default function LinkButton({ children, href, className }: ButtonProps) {
   return (
     <Link
       href={href}
-      className="flex flex-row items-center self-start w-full rounded-lg bg-blue-500 hover:bg-blue-400 active:bg-blue-300 p-3 text-white transition-colors"
+      className={clsx(
+        `flex flex-row items-center self-start w-full rounded-lg bg-blue-500 hover:bg-blue-400 active:bg-blue-300 p-3 text-white transition-colors`,
+        className,
+      )}
     >
-      <div
-        className={`${quicksand.className} px-6 text-3xl flex flex-row gap-3`}
-      >
-        {children}
-      </div>
+      {children}
     </Link>
   );
 }

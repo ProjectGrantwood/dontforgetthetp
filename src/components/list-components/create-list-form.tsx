@@ -11,7 +11,7 @@ import { Button } from "@/components/shadcnui-components/button";
 import { Textarea } from "@/components/shadcnui-components/textarea";
 import { Switch } from "@/components/shadcnui-components/switch";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import ListItem from "@/components/list-components/list-item";
+import CreateListItem from "@/components/list-components/create-list-item";
 import type { ItemTemplate } from "@/types/entities";
 import { ShoppingListJoinNewItemData } from "@/types/dto";
 import { createListAction } from "@/actions/list-actions";
@@ -126,7 +126,7 @@ export default function CreateListForm({
           <h1 className="mb-3">Items</h1>
         )}
         {items.map((item, index) => (
-          <ListItem
+          <CreateListItem
             key={`${item.list_item_id}`}
             item={item}
             onRemoveAction={handleRemoveItem}

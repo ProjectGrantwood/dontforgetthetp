@@ -6,13 +6,13 @@ import { Input } from "@/components/shadcnui-components/input";
 import { Button } from "@/components/shadcnui-components/button";
 import { Textarea } from "@/components/shadcnui-components/textarea";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { ListItemData } from "@/types/dto";
+import { ShoppingListJoinNewItemData } from "@/types/dto";
 
 const LABEL_STYLE = "text-lg text-gray-500 min-h-8";
 const INPUT_STYLE = "text-lg min-h-8 md:text-lg";
 const INPUT_LABEL_WRAPPER_STYLE = "flex flex-col items-center";
 
-export default function ListItem({
+export default function CreateListItem({
   item,
   onRemoveAction,
   onUpdateNotesAction,
@@ -22,7 +22,7 @@ export default function ListItem({
   index,
   className,
 }: {
-  item: ListItemData;
+  item: ShoppingListJoinNewItemData;
   onRemoveAction: (index: number) => void;
   onUpdateNotesAction: (index: number, notes: string) => void;
   onUpdateItemNameAction: (index: number, name: string) => void;
@@ -63,7 +63,9 @@ export default function ListItem({
             min={1}
             max={100}
             name="item-amount"
-            onChange={(e) => onUpdateItemAmountAction(index, e.target.value)}
+            onChange={(e) =>
+              onUpdateItemAmountAction(index, Number(e.target.value))
+            }
             className={INPUT_STYLE}
           />
           <label htmlFor="item-amount" className={LABEL_STYLE}>
@@ -108,7 +110,7 @@ export default function ListItem({
           <Textarea
             name="item-notes"
             placeholder="Add notes..."
-            defaultValue={item.notes}
+            defaultValue={item.item_notes ? item.item_notes : ""}
             onChange={(e) => onUpdateNotesAction(index, e.target.value)}
             spellCheck={false}
             className="text-lg md:text-lg resize-none"

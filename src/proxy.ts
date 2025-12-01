@@ -10,5 +10,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/home/:path*", "/db-operations/:path*"],
+  matcher: ["/home/:path*", "/db-operations/:path*", "/handler/:path*"],
 };

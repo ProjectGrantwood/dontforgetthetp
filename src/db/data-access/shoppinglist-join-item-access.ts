@@ -6,7 +6,7 @@ export async function getAllItemsByShoppingListId(
   id: string,
 ): Promise<ShoppingListJoinItem[]> {
   const items = await sql<ShoppingListJoinItem[]>`
-        SELECT * FROM shopping_list_join_items WHERE shopping_list_id = ${id}
+        SELECT * FROM shopping_lists_join_items WHERE list_id = ${id}
     `;
   return items;
 }
@@ -75,4 +75,12 @@ export async function toggleItemCheckedOff(
       SET checked_off = ${checkedOff}
       WHERE list_id = ${listId} and item_id=${itemId}
     `;
+}
+
+export async function countListItems(listId: string) {
+  const itemCount = await sql`
+      SELECT COUNT(*) FROM shopping_list_join_items slju
+      WHERE slju.list_id = ${listId}
+    `;
+  return itemCount;
 }

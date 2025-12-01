@@ -1,7 +1,10 @@
+export type UserRole = "owner" | "editor" | "viewer";
+
 export type ShoppingList = {
   list_id: string;
   list_name: string;
   list_notes: string | null;
+  item_count: number;
   is_public: boolean;
   created_at: string;
   updated_at: string;
@@ -14,8 +17,6 @@ export type ItemTemplate = {
   created_at: string;
   updated_at: string;
 };
-
-export type UserRole = "owner" | "editor" | "viewer";
 
 export type ShoppingListJoinUser = {
   user_id: string;
@@ -36,4 +37,11 @@ export type ShoppingListJoinItem = {
   checked_off: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type ShoppingSession = {
+  list_id: string;
+  user_id: string;
+  started_at: string;
+  ended_at: string;
 };

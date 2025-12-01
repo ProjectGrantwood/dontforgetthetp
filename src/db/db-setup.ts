@@ -3,12 +3,13 @@ import { sql } from "@/lib/connections/preparedPostgresSql";
 async function setupShoppingListsTable() {
   await sql`
             CREATE TABLE IF NOT EXISTS shopping_lists (
-                list_id    UUID                 DEFAULT uuid_generate_v4() PRIMARY KEY,
-                list_name  TEXT        NOT NULL,
+                list_id    UUID                    DEFAULT uuid_generate_v4() PRIMARY KEY,
+                list_name  TEXT           NOT NULL,
                 list_notes TEXT,
-                is_public  BOOLEAN     NOT NULL DEFAULT FALSE,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                item_count NUMERIC(10, 0) NOT NULL,
+                is_public  BOOLEAN        NOT NULL DEFAULT FALSE,
+                created_at TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+                updated_at TIMESTAMPTZ    NOT NULL DEFAULT NOW()
             );
         `;
 
@@ -65,8 +66,8 @@ async function setupShoppingListsJoinUsersTable() {
     `;
 
   await sql`CREATE TABLE IF NOT EXISTS shopping_lists_join_users (
-                user_id    TEXT                         NOT NULL REFERENCES neon_auth.users_sync(id)          ON DELETE CASCADE,
-                list_id    UUID                         NOT NULL REFERENCES shopping_lists(list_id) ON DELETE CASCADE,
+                user_id    TEXT                         NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+                list_id    UUID                         NOT NULL REFERENCES shopping_lists(list_id)  ON DELETE CASCADE,
                 user_role  shopping_list_user_role_type NOT NULL,
                 is_pinned  BOOLEAN                      NOT NULL DEFAULT FALSE,
                 created_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
@@ -83,6 +84,40 @@ async function setupShoppingListsJoinUsersTable() {
   return true;
 }
 
+export async function setupShoppingSessionsTable() {
+  await sql`CREATE TABLE IF NOT EXISTS shopping_sessions (
+              list_id    UUID        NOT NULL REFERENCES shopping_lists(list_id)  ON DELETE RESTRICT,
+              user_id    TEXT        NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE RESTRICT,
+              started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+              ended_at   TIMESTAMPTZ
+    );
+    `;
+}
+
+export async function setupUserRelationshipsTable() {
+  await sql`
+        DO $$
+        BEGIN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM pg_type
+            WHERE typname = 'user_relationship_status_type'
+        ) THEN
+            CREATE TYPE user_relationship_status_type AS ENUM ('pending', 'accepted', 'blocked');
+        END IF;
+        END
+        $$;
+    `;
+  await sql`CREATE TABLE IF NOT EXISTS user_relationships (
+            user_id_1  TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+            user_id_2  TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+            status     user_relationship_status_type NOT NULL DEFAULT 'pending',
+            created_at TIMESTAMPTZ                   NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMPTZ                   NOT NULL DEFAULT NOW()
+    );
+    `;
+}
+
 export async function setupAllTables() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await sql`CREATE EXTENSION IF NOT EXISTS "citext";`;
@@ -92,5 +127,7 @@ export async function setupAllTables() {
     setupItemTemplatesTable(),
     setupShoppingListsJoinItemTemplatesTable(),
     setupShoppingListsJoinUsersTable(),
+    setupShoppingSessionsTable(),
+    setupUserRelationshipsTable(),
   ]);
 }

@@ -1,19 +1,21 @@
 import { sql } from "@/lib/connections/postgresSql";
+import { ShoppingListWithUserMeta } from "@/types/dto";
 import { ShoppingList } from "@/types/entities";
 
 export async function createList(
   listId: string,
   listName: string,
   isPublic: boolean,
+  itemCount: number,
   listNotes: string | null,
 ) {
-  await sql`INSERT INTO shopping_lists (list_id, list_name, list_notes, is_public, created_at, updated_at) VALUES (${listId}, ${listName}, ${listNotes ?? null}, ${isPublic}, NOW(), NOW()) RETURNING list_id`;
+  await sql`INSERT INTO shopping_lists (list_id, list_name, list_notes, item_count, is_public, created_at, updated_at) VALUES (${listId}, ${listName}, ${listNotes ?? null}, ${itemCount}, ${isPublic}, NOW(), NOW()) RETURNING list_id`;
   return listId;
 }
 
 export async function getListsByUserId(userId: string) {
-  const lists = await sql<ShoppingList[]>`
-        SELECT sl.list_id, sl.list_name, sl.is_public, sl.created_at, sl.updated_at, slju.user_role, slju.is_pinned
+  const lists = await sql<ShoppingListWithUserMeta[]>`
+        SELECT sl.list_id, sl.list_name, sl.list_notes, sl.item_count, sl.is_public, slju.is_pinned, slju.user_role, sl.updated_at
         FROM shopping_lists sl
         JOIN shopping_lists_join_users slju ON sl.list_id = slju.list_id
         WHERE slju.user_id = ${userId}
@@ -22,14 +24,12 @@ export async function getListsByUserId(userId: string) {
   return lists;
 }
 
-export async function getListByUserIdAndListId(userId: string, listId: string) {
-  const lists = await sql<ShoppingList[]>`
-        SELECT sl.list_id, sl.list_name, sl.is_public, sl.created_at, sl.updated_at, slju.user_role, slju.is_pinned
-        FROM shopping_lists sl
-        JOIN shopping_lists_join_users slju ON sl.list_id = slju.list_id
-        WHERE slju.user_id = ${userId} AND sl.list_id = ${listId}
+export async function getListById(listId: string): Promise<ShoppingList> {
+  const list = await sql<ShoppingList[]>`
+      SELECT * FROM shopping_lists
+      WHERE list_id = ${listId};
     `;
-  return lists[0];
+  return list[0];
 }
 
 export async function updateList(

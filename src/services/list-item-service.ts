@@ -1,4 +1,8 @@
-import { createItems } from "@/db/data-access/shoppinglist-join-item-access";
+import {
+  createItems,
+  countListItems,
+  getAllItemsByShoppingListId,
+} from "@/db/data-access/shoppinglist-join-item-access";
 import {
   ShoppingListJoinItemData,
   ShoppingListJoinNewItemData,
@@ -27,4 +31,14 @@ export const createItemsService = async (
   );
   const itemsCreated = await createItems(convertedItems);
   return itemsCreated;
+};
+
+export const countListItemsService = async (listId: string) => {
+  const itemCount = await countListItems(listId);
+  return itemCount;
+};
+
+export const getAllItemsByShoppingListIdService = async (listId: string) => {
+  const items = await getAllItemsByShoppingListId(listId);
+  return items;
 };
