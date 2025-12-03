@@ -9,7 +9,10 @@ export async function createList(
   itemCount: number,
   listNotes: string | null,
 ) {
-  await sql`INSERT INTO shopping_lists (list_id, list_name, list_notes, item_count, is_public, created_at, updated_at) VALUES (${listId}, ${listName}, ${listNotes ?? null}, ${itemCount}, ${isPublic}, NOW(), NOW()) RETURNING list_id`;
+  await sql`INSERT INTO shopping_lists (list_id, list_name, list_notes, item_count, is_public, created_at, updated_at) 
+            VALUES (${listId}, ${listName}, ${listNotes ?? null}, ${itemCount}, ${isPublic}, NOW(), NOW()) 
+            RETURNING list_id
+  `;
   return listId;
 }
 

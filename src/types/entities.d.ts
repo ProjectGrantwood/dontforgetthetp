@@ -1,5 +1,7 @@
 export type UserRole = "owner" | "editor" | "viewer";
 
+export type UserRelationshipStatus = "pending" | "accepted" | "blocked";
+
 export type ShoppingList = {
   list_id: string;
   list_name: string;
@@ -44,4 +46,14 @@ export type ShoppingSession = {
   user_id: string;
   started_at: string;
   ended_at: string;
+};
+
+export type UserRelationship = {
+  user_id_1: string;
+  user_id_2: string;
+  status: UserRelationshipStatus;
+  prev_status: UserRelationshipStatus | null;
+  user_initiating_action_id: string;
+  created_at: string;
+  updated_at: string;
 };

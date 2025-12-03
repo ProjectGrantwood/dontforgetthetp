@@ -12,8 +12,6 @@ async function setupShoppingListsTable() {
                 updated_at TIMESTAMPTZ    NOT NULL DEFAULT NOW()
             );
         `;
-
-  return true;
 }
 
 async function setupItemTemplatesTable() {
@@ -25,8 +23,6 @@ async function setupItemTemplatesTable() {
                 updated_at            TIMESTAMPTZ NOT NULL  DEFAULT NOW()
             );
         `;
-
-  return true;
 }
 
 async function setupShoppingListsJoinItemTemplatesTable() {
@@ -46,8 +42,6 @@ async function setupShoppingListsJoinItemTemplatesTable() {
   await sql`CREATE INDEX IF NOT EXISTS ix_join_items_list 
                 ON shopping_lists_join_items(list_id);
         `;
-
-  return true;
 }
 
 async function setupShoppingListsJoinUsersTable() {
@@ -73,15 +67,13 @@ async function setupShoppingListsJoinUsersTable() {
                 created_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
                 updated_at TIMESTAMPTZ                  NOT NULL DEFAULT NOW(),
                 PRIMARY KEY (user_id, list_id)
-            );
+              );
         `;
 
   await sql`
             CREATE INDEX IF NOT EXISTS ix_join_users_list 
                 ON shopping_lists_join_users(list_id);
         `;
-
-  return true;
 }
 
 export async function setupShoppingSessionsTable() {
@@ -90,7 +82,7 @@ export async function setupShoppingSessionsTable() {
               user_id    TEXT        NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE RESTRICT,
               started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
               ended_at   TIMESTAMPTZ
-    );
+            );
     `;
 }
 
@@ -108,14 +100,22 @@ export async function setupUserRelationshipsTable() {
         END
         $$;
     `;
+
   await sql`CREATE TABLE IF NOT EXISTS user_relationships (
-            user_id_1  TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
-            user_id_2  TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
-            status     user_relationship_status_type NOT NULL DEFAULT 'pending',
-            created_at TIMESTAMPTZ                   NOT NULL DEFAULT NOW(),
-            updated_at TIMESTAMPTZ                   NOT NULL DEFAULT NOW()
-    );
+              user_id_1                 TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+              user_id_2                 TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+              status                    user_relationship_status_type NOT NULL DEFAULT 'pending',
+              prev_status               user_relationship_status_type,
+              user_initiating_action_id TEXT                          NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+              created_at                TIMESTAMPTZ                   NOT NULL DEFAULT NOW(),
+              updated_at                TIMESTAMPTZ                   NOT NULL DEFAULT NOW()
+            );
     `;
+
+  await sql`
+    CREATE UNIQUE INDEX idx_unique_relationship 
+    ON user_relationships (user_id_1, user_id_2);
+  `;
 }
 
 export async function setupAllTables() {

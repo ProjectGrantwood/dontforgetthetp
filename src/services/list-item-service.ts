@@ -8,14 +8,14 @@ import {
   ShoppingListJoinNewItemData,
 } from "@/types/dto";
 
-export const createItemsService = async (
+export async function createItemsService(
   items: ShoppingListJoinNewItemData[],
   listId: string,
-) => {
+) {
   const convertNewItemToShoppingListItem = (
     item: ShoppingListJoinNewItemData,
     listId: string,
-  ) => {
+  ) {
     return {
       list_id: listId,
       list_item_id: item.list_item_id,
@@ -33,12 +33,12 @@ export const createItemsService = async (
   return itemsCreated;
 };
 
-export const countListItemsService = async (listId: string) => {
+export async function countListItemsService(listId: string) {
   const itemCount = await countListItems(listId);
   return itemCount;
 };
 
-export const getAllItemsByShoppingListIdService = async (listId: string) => {
+export async function getAllItemsByShoppingListIdService(listId: string) {
   const items = await getAllItemsByShoppingListId(listId);
   return items;
 };

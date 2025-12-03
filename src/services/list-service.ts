@@ -8,7 +8,7 @@ import {
 
 import { ShoppingListData, ShoppingListWithUserMeta } from "@/types/dto";
 
-export const createListService = async (listData: ShoppingListData) => {
+export async function createListService(listData: ShoppingListData) {
   const listId = await createList(
     listData.list_id,
     listData.list_name,
@@ -17,14 +17,14 @@ export const createListService = async (listData: ShoppingListData) => {
     listData.list_notes,
   );
   return listId;
-};
+}
 
-export const getListByIdService = async (listId: string) => {
+export async function getListByIdService(listId: string) {
   const list = await getListById(listId);
   return list;
-};
+}
 
-export const getListsByUserIdService = async (userId: string) => {
+export async function getListsByUserIdService(userId: string) {
   const lists = await getListsByUserId(userId);
   function sortListsbyPinnedOrDate(
     listA: ShoppingListWithUserMeta,
@@ -44,20 +44,20 @@ export const getListsByUserIdService = async (userId: string) => {
 
   const listsSorted = lists.sort(sortListsbyPinnedOrDate);
   return listsSorted;
-};
+}
 
-export const updateListService = async (
+export async function updateListService(
   userId: string,
   listId: string,
   listName?: string,
-) => {
+) {
   // needs user role verification
   const updatedList = await updateList(userId, listId, listName);
   return updatedList;
-};
+}
 
-export const deleteListService = async (userId: string, listId: string) => {
+export async function deleteListService(userId: string, listId: string) {
   // needs user role verification
   const deletedList = await deleteList(listId);
   return deletedList;
-};
+}
