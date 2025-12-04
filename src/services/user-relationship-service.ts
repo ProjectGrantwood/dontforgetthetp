@@ -124,6 +124,7 @@ export async function unblockUserService(
       throw new Error("User is not blocked");
     }
     if (status === "blocked") {
+      // can't unblock someone who blocked you
       if (actingUserId !== sendingUserId) {
         throw new Error("Could not complete request");
       }
@@ -141,5 +142,25 @@ export async function unblockUserService(
         );
       }
     }
+  }
+}
+
+export async function acceptFriendRequest(sendingUserId: string, receivingUserId: string) {
+  const existingUserRelationship: UserRelationship[] = await findRelationship(
+    sendingUserId,
+    receivingUserId,
+  );
+  
+  if (existingUserRelationship.length > 0) {
+    const status = existingUserRelationship[0].status;
+    const actingUserId = existingUserRelationship[0].user_initiating_action_id;
+    if (status === "pending") {
+      // we probably don't need to check that the "accepting" user isn't 
+      // the user that initiated the previous request for friendship,
+      // because the frontend logic shouldn't allow for that anyway. So this is just-in-case.
+      if ()
+    }
+
+    
   }
 }
